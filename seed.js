@@ -27,11 +27,11 @@ async function runSeed() {
     console.error(err);
     process.exitCode = 1;
   }
-  // finally {
-  //   console.log('closing db connection');
-  //   await db.close();
-  //   console.log('db connection closed');
-  // }
+  finally {
+    console.log('closing db connection');
+    await db.close();
+    console.log('db connection closed');
+  }
 }
 
 /* You can do 2 things with JS file using node: you can require it by another file or

@@ -34,7 +34,7 @@ const AuthForm = props => {
 };
 
 /* Note that we have two different sets of 'mapStateToProps' functions -
-one for Login, and one for Signup. However, they share the same 'mapDispatchToProps' function & Component. 
+one for Login, and one for Signup. However, they share the same 'mapDispatchToProps' function & Component.
 This is a good example of how we can stay DRY with interfaces that are very similar to each other! */
 
 const mapLoginToProps = state => {
