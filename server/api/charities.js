@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const { User } = require('../db/models');
+const { Charity } = require('../db/models');
 
 router.get('/', async(req, res, next) => {
   try {
-    const users = await User.findAll();
-    console.log('users', users)
-    if(users) res.json(users);
+    const charities = await Charity.findAll();
+    if(charities) res.json(charities);
     else res.sendStatus(500);
   } catch (err) {
     next(err);

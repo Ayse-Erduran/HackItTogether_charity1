@@ -1,16 +1,38 @@
 const db = require('./server/db/db');
-const User = require('./server/db/models/user');
+const {User, Bank, Charity, Account} = require('./server/db/models');
 
 /* Seed function syncs our db and creates 2 users.
 Seed function is concerned only with modifying the database. */
 async function seed() {
   await db.sync({ forced: true });
+  await User.sync({force: true});
+  await Bank.sync({force: true});
+  await Charity.sync({force: true});
+  await Account.sync({force: true});
+
   console.log('db synced!');
 
   const users = await Promise.all([
     User.create({ email: 'cody@email.com', password: '1234' }),
     User.create({ email: 'murphy@email.com', password: '12345' }),
   ]);
+
+  await Promise.all([
+    Bank.create({ name: 'Chase', routingNumber: '021000021'}),
+    Bank.create({ name: 'Citi', routingNumber: '021000089'})
+  ]);
+
+  await Promise.all([
+    Charity.create({name: 'Planned Parenthood', location: 'New York', cause: 'female reproductive rights, family planning'}),
+    Charity.create({name: 'American Red Cross', location: 'Washington D.C.', cause: 'provides emergency assistance, disaster relief, and disaster preparedness education'})
+  ])
+
+  await Promise.all([
+    Account.create({accountType: 'checking', accountNumber: '12345678', currentBalance: 500}),
+    Account.create({accountType: 'checking', accountNumber:'987654321', currentBalance: 1000})
+  ])
+
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
 }

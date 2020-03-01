@@ -79,8 +79,8 @@ const syncDb = () => db.sync()
 async function bootApp(){
   await sessionStore.sync(); // sync so that our session table gets created
   await syncDb();
-  await createApp();
-  await startListening();
+  createApp();
+  startListening();
 }
 
 if (require.main === module){
