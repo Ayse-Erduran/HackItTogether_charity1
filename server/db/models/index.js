@@ -4,24 +4,29 @@ const Account = require('./account.js')
 const Bank = require('./bank.js')
 const Charity = require('./charity.js')
 
+
 //define relations between models here
-Bank.hasMany(Account,  {
-  foreignKey: 'bankAccountId'});
-Account.belongsTo(Bank);
+Bank.hasMany(Account)
+Account.belongsTo(Bank, {
+  foreignKey: 'bankId'
+})
+User.hasMany(Account);
+Account.belongsTo(User, {foreignKey: 'userId'})
 
-User.hasMany(Account, { foreignKey: 'userAccountId' });
-Account.belongsTo(User)
+const UserCharity = db.define('UserCharity')
 
-User.belongsToMany(Charity, {through: 'UserCharity'});
-Charity.belongsToMany(User, {through: 'UserCharity'});
+User.belongsToMany(Charity, {through: UserCharity});
 
-Charity.hasMany(Account, { foreignKey: 'charityAccountId'});
-Account.belongsTo(Charity)
+Charity.belongsToMany(User, {through: UserCharity});
+
+Charity.hasMany(Account);
+Account.belongsTo(Charity, { foreignKey: 'charityId'})
 
 module.exports = {
   User,
   Account,
   Bank,
   Charity,
+  UserCharity,
   db
 }

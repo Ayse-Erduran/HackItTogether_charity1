@@ -1,5 +1,4 @@
-const db = require('./server/db/db');
-const {User, Bank, Charity, Account} = require('./server/db/models');
+const {User, Bank, Charity, Account, UserCharity, db} = require('./server/db/models');
 
 /* Seed function syncs our db and creates 2 users.
 Seed function is concerned only with modifying the database. */
@@ -13,8 +12,8 @@ async function seed() {
   console.log('db synced!');
 
   const users = await Promise.all([
-    User.create({ email: 'cody@email.com', password: '1234' }),
-    User.create({ email: 'murphy@email.com', password: '12345' }),
+    User.create({ email: 'cody@email.com', password: '1234'}),
+    User.create({ email: 'murphy@email.com', password: '12345'}),
   ]);
 
   await Promise.all([
@@ -28,8 +27,15 @@ async function seed() {
   ])
 
   await Promise.all([
-    Account.create({accountType: 'checking', accountNumber: '12345678', currentBalance: 500}),
-    Account.create({accountType: 'checking', accountNumber:'987654321', currentBalance: 1000})
+    Account.create({accountType: 'checking', accountNumber: '12345678', currentBalance: 500, bankId: 1, userId: 1}),
+    Account.create({accountType: 'checking', accountNumber:'987654321', currentBalance: 1000, bankId: 1, userId: 2}),
+    Account.create({accountType: 'checking', accountNumber: '39474204', currentBalance: 5832, bankId: 2, charityId: 1}),
+    Account.create({accountType: 'checking', accountNumber: '3947438534', currentBalance: 200, bankId: 2, charityId: 2})
+  ])
+
+  await Promise.all([
+    UserCharity.create({userId: 1, charityId: 1}),
+    UserCharity.create({userId: 2, charityId: 2})
   ])
 
 
