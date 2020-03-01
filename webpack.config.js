@@ -3,7 +3,10 @@
 const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
-  entry: './app/index.js', // assumes your entry point is the index.js in the root of your project folder
+  entry: [
+    '@babel/polyfill',
+    './app/index.js', // assumes your entry point is the index.js in the root of your project folder
+  ],
   mode: isDev ? 'development' : 'production',
   output: {
     path: __dirname, // assumes your bundle.js will also be in the root of your project folder
